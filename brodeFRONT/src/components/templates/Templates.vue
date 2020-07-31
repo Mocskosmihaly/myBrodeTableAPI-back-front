@@ -27,7 +27,13 @@
       <hr class="border border-grey-light my-6" />
 
       <ul class="list-reset mt-4">
-        <input class="input" autofocus autocomplete="off" placeholder="Filter..." v-model="search" />
+        <input
+          class="input"
+          autofocus
+          autocomplete="off"
+          placeholder="Filter..."
+          v-model="search"
+        />
         <li
           class="py-4"
           v-for="template in filteredTemplates"
@@ -40,25 +46,34 @@
           >
             <div class="flex items-center justify-between flex-wrap">
               <p class="block flex-1 font-mono font-semibold flex items-center">
-                <img src="https://img.icons8.com/wired/30/000000/activity-grid.png" />
+                <img
+                  src="https://img.icons8.com/wired/30/000000/activity-grid.png"
+                />
                 {{ template.name }}
               </p>
 
               <button
                 class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="editTemplate(template)"
-              >Edit</button>
+              >
+                Edit
+              </button>
 
               <button
                 class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
                 @click.prevent="removeTemplate(template)"
-              >Delete</button>
+              >
+                Delete
+              </button>
             </div>
+            <v-divider></v-divider>
           </router-link>
 
           <div v-if="template == editedTemplate">
             <form action @submit.prevent="updateTemplate(template)">
-              <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
+              <div
+                class="mb-6 p-4 bg-white rounded border border-grey-light mt-4"
+              >
                 <input class="input" v-model="template.name" />
                 <input
                   type="submit"
@@ -151,7 +166,7 @@ export default {
       this.editedTemplate = "";
       this.$http.secured
         .patch(`/api/v1/templates/${template.id}`, {
-          template: { title: template.name }
+          template: { name: template.name }
         })
         .catch(error => this.setError(error, "Cannot update template"));
     }
