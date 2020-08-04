@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :templates 
         resources :records
+  resources :data
+
       
     end
   end
