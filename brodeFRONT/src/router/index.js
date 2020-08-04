@@ -5,6 +5,7 @@ import Signup from "@/components/Signup.vue";
 import Records from "@/components/records/Records.vue";
 import Templates from "@/components/templates/Templates.vue";
 import Table from "@/components/table/Table.vue";
+import Data from "@/components/data/Data.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -27,7 +28,11 @@ export default new Router({
       name: "Table",
       component: Table
     },
-
+    {
+      path: "/data",
+      name: "Data",
+      component: Data
+    },
     {
       path: "/",
       name: "Signin",

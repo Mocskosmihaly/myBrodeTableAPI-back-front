@@ -19,10 +19,10 @@
               {{ createdHours }}
             </td>
             <td data-label="TEPLOTA VZDUCHU" id="degree" class="default szwsz">
-              25°C
+              {{ filteredDatas[0].temperature }} °C
             </td>
             <td data-label="RÝCHLOST´ VETRA" id="speed" class="default">
-              13km/hod
+              {{ filteredDatas[0].windspeed }} km/h
             </td>
           </tr>
         </tbody>
@@ -64,7 +64,9 @@ export default {
     return {
       templates: [],
       records: [],
-      activeSpan: 0
+      activeSpan: 0,
+      datas: []
+      // filteredDatas: []
     };
   },
   mounted() {
@@ -73,7 +75,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      id: "id"
+      id: "id",
+      dataId: "dataId"
     }),
 
     createdDate() {
@@ -88,10 +91,27 @@ export default {
       let filtered = this.records.filter(record => {
         return record.template_id == localId;
       });
-      console.log(localId);
-      console.log(filtered);
-      console.log(this.records);
+      // console.log(localId);
+      // console.log(filtered);
+      // console.log(this.records);
       return filtered;
+    },
+    // filteredDatas: function() {
+    //   let localId2 = this.dataId;
+    //   let filtered2 = this.datas.filter(data => {
+    //     return data.id === localId2;
+    //   });
+    //   console.log(localId2);
+    //   console.log(filtered2);
+    //   console.log(this.datas);
+    //   return filtered2;
+    // }
+    filteredDatas() {
+      let localId2 = this.dataId;
+
+      return this.datas.filter(data => {
+        return data.id == localId2;
+      });
     }
   },
   methods: {
@@ -104,6 +124,7 @@ export default {
         }
       }, 8000);
     },
+
     getClass(record) {
       return {
         zdolanahor: record.path === "Zdola nahor",
@@ -134,10 +155,18 @@ export default {
           this.templates = response.data;
         })
         .catch(error => this.setError(error, "Something went wrong"));
+      this.$http.secured
+        .get("/api/v1/data")
+        .then(response => {
+          console.log(response.data);
+          this.datas = response.data;
+        })
+        .catch(error => this.setError(error, "Something went wrong"));
     }
   },
   mounted() {
     this.$store.dispatch("SET_TEMPLATE");
+    this.$store.dispatch("SET_DATAID");
   }
 };
 </script>
