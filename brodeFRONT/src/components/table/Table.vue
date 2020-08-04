@@ -1,6 +1,8 @@
 <template>
   <body>
-    <div class="container">
+    <div
+      class="container uppercase text-xl font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker "
+    >
       <table>
         <thead>
           <tr>
@@ -25,22 +27,36 @@
           </tr>
         </tbody>
       </table>
-      <div class="container2">
-        <h1
-          class="content"
-          v-for="(record, index) of records"
-          :key="index"
-          :record="record"
-          :class="{ 'is-active': index === activeSpan }"
-        >
-          <strong>{{ record.description }}</strong>
-        </h1>
-      </div>
+
+      <h1
+        v-for="(record, index) of filteredRecords"
+        :key="index"
+        :record="record"
+        :class="{ 'is-active': index === activeSpan }"
+      >
+        <div :class="getClass(record)">
+          <!-- v-show="record.template_id === sec" -->
+          <strong v-show="record.path === 'Zdola nahor'"
+            >{{ record.description }}
+          </strong>
+          <strong v-show="record.path === 'Zlava doprava'"
+            >{{ record.description }}
+          </strong>
+          <strong v-show="record.path === 'Zprava dolava'"
+            >{{ record.description }}
+          </strong>
+          <strong v-show="record.path === 'Zhora nadol'"
+            >{{ record.description }}
+          </strong>
+        </div>
+      </h1>
+      <!-- templatenel megadom egy valtozoba a template.id es ki filtralom a record.template_id === template.id  -->
     </div>
   </body>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import moment from "moment";
 export default {
   name: "Table",
@@ -48,31 +64,58 @@ export default {
     return {
       templates: [],
       records: [],
-      sec: 9,
       activeSpan: 0
     };
   },
+  mounted() {
+    // this.records = this.filteredRecords;
+  },
+
   computed: {
+    ...mapGetters({
+      id: "id"
+    }),
+
     createdDate() {
       return moment().format("DD-MM-YYYY ");
     },
     createdHours() {
       return moment().format("HH:mm ");
+    },
+
+    filteredRecords: function() {
+      let localId = this.id;
+      let filtered = this.records.filter(record => {
+        return record.template_id == localId;
+      });
+      console.log(localId);
+      console.log(filtered);
+      console.log(this.records);
+      return filtered;
     }
   },
   methods: {
     showMe() {
       setInterval(() => {
-        if (this.activeSpan === this.records.length - 1) {
+        if (this.activeSpan === this.filteredRecords.length - 1) {
           this.activeSpan = 0;
         } else {
           this.activeSpan++;
         }
       }, 8000);
+    },
+    getClass(record) {
+      return {
+        zdolanahor: record.path === "Zdola nahor",
+        zlavadoprava: record.path === "Zlava doprava",
+        zpravadolava: record.path === "Zprava dolava",
+        zhoranadol: record.path === "Zhora nadol"
+      };
     }
   },
+
   created() {
-    if (this.sec != 0) {
+    if (this.id != 0) {
       this.showMe();
     }
     if (!localStorage.signedIn) {
@@ -81,7 +124,8 @@ export default {
       this.$http.secured
         .get("/api/v1/records")
         .then(response => {
-          this.records = response.data;
+          // console.log(response.data);
+          this.records.splice(0, this.records.length - 1, ...response.data);
         })
         .catch(error => this.setError(error, "Something went wrong"));
       this.$http.secured
@@ -91,6 +135,9 @@ export default {
         })
         .catch(error => this.setError(error, "Something went wrong"));
     }
+  },
+  mounted() {
+    this.$store.dispatch("SET_TEMPLATE");
   }
 };
 </script>
@@ -127,31 +174,46 @@ body {
   margin: 0;
 }
 .container2 {
-  background-color: rgb(0, 0, 0);
+  background-color: #edf2f7;
   padding-top: 35px;
   height: 100px;
 }
-.content {
+.zlavadoprava {
+  margin-top: 25px;
   width: 100px;
   height: 100px;
   animation: move 20s linear infinite;
 }
+.zhoranadol {
+  margin-top: 25px;
+
+  width: 100px;
+  height: 100px;
+  animation: move2 20s linear infinite;
+}
+.zdolanahor {
+  margin-top: 25px;
+
+  width: 100px;
+  height: 100px;
+  animation: move3 20s linear infinite;
+}
+
+.zpravadolava {
+  margin-top: 25px;
+
+  width: 100px;
+  height: 100px;
+  animation: move4 20s linear infinite;
+}
+
 .content2 {
   width: 100px;
   height: 100px;
-  animation: move2 1s infinite alternate;
+  /* animation: move2 1s infinite alternate; */
 }
 span {
   height: 200px;
-}
-
-@keyframes move2 {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
 }
 
 @keyframes move {
@@ -159,29 +221,61 @@ span {
     transform: translate(50px);
     opacity: 1;
   }
-  50% {
+  90% {
     transform: translate(500px);
     opacity: 1;
   }
 
-  52% {
+  92% {
     transform: translate(500px);
     opacity: 0;
   }
-  54% {
+  94% {
     transform: translate(500px);
     opacity: 1;
   }
-  56% {
+  96% {
     transform: translate(500px);
     opacity: 0;
   }
-  58% {
+  98% {
     transform: translate(500px);
     opacity: 1;
   }
-  60% {
+  /* 60% {
     transform: translate(500px);
+    opacity: 1;
+  } */
+
+  100% {
+    opacity: 1;
+    transform: translate(50px);
+  }
+}
+@keyframes move4 {
+  0% {
+    transform: translate(500px);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(50px);
+    opacity: 1;
+  }
+
+  92% {
+    transform: translate(50px);
+    opacity: 0;
+  }
+  94% {
+    transform: translate(50px);
+    opacity: 1;
+  }
+  96% {
+    transform: translate(50px);
+    opacity: 0;
+  }
+  98% {
+    transform: translate(50px);
     opacity: 1;
   }
 
@@ -190,9 +284,8 @@ span {
     transform: translate(50px);
   }
 }
-
 .container {
-  background-color: #a09d9d;
+  background-color: #cbd5e0;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(12, 16, 31, 0.4);
   padding: 100px;
@@ -220,39 +313,21 @@ table tbody tr {
   background-color: #5a5b5c;
 }
 
-table tbody tr:hover {
-  background-color: #151b31;
-  box-shadow: 0 3px 5px rgba(255, 255, 255, 0.4);
-}
 .default {
   font-size: 1.2rem;
 }
 
 .container2 h1 {
-  color: #fff;
+  color: rgb(12, 12, 12);
   font-size: 1.5em;
   width: 100%;
 }
 .container2 {
-  background-color: #5a5b5c;
+  background-color: #edf2f7;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(12, 16, 31, 0.4);
 }
-.container2:hover {
-  background-color: #151b31;
-  box-shadow: 0 3px 5px rgba(255, 255, 255, 0.4);
-}
 
-table .delete {
-  background-color: #242c4c;
-  border: 0;
-  border-radius: 2px;
-  color: #909090;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 5px 10px;
-  opacity: 0;
-}
 .colc.szwsz {
   padding-left: 45px;
 }

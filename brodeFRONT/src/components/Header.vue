@@ -19,7 +19,10 @@
           class="uppercase text-xl font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
         >
           <div class="imged">
-            <img src="https://img.icons8.com/plasticine/40/000000/cargo-ship.png" /> BRODOVA TABULA
+            <img
+              src="https://img.icons8.com/plasticine/40/000000/cargo-ship.png"
+            />
+            BRODOVA TABULA
           </div>
         </a>
       </div>
@@ -28,28 +31,33 @@
           to="/table"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="!signedIn()"
-        >Sign in</router-link>
+          >Sign in</router-link
+        >
         <router-link
           to="/signup"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="!signedIn()"
-        >Sign Up</router-link>
+          >Sign Up</router-link
+        >
         <router-link
           to="/table"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-        >Home</router-link>
+          >Home</router-link
+        >
         <router-link
           to="/templates"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-        >Config</router-link>
+          >Config</router-link
+        >
         <a
           href="#"
           @click.prevent="signOut"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-        >Sign out</a>
+          >Sign out</a
+        >
       </div>
     </div>
   </header>
@@ -89,7 +97,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .imged {

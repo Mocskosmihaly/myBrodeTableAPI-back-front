@@ -1,49 +1,31 @@
 // let message = localStorage.getItem('inputs.message');
 
 const state = {
-  message: JSON.parse(localStorage.getItem("message")) || "",
   // console.log(message);
-  sec: localStorage.sec || 0
+  id: localStorage.id || 0
 
   // other state
 };
 const getters = {
-  message: state => {
-    // console.log(this.state.message);
-
-    return state.message;
-  },
-
-  sec: state => {
-    return state.sec;
+  id: state => {
+    return state.id;
   }
 
   // other getters
 };
 
 const actions = {
-  setMessage: ({ commit, state }, inputs) => {
-    commit("SET_MESSAGE", inputs.map(input => input.message));
-
-    return state.message;
-  },
-
-  setSec: ({ commit, state }, newSecVal) => {
-    commit("SET_TIMEOUT", newSecVal);
-    return state.sec;
+  setTemplate: ({ commit, state }, newidVal) => {
+    commit("SET_TEMPLATE", newidVal);
+    return state.id;
   }
 
   // other actions
 };
 const mutations = {
-  SET_MESSAGE: (state, newValue) => {
-    state.message = newValue;
-    localStorage.setItem("message", JSON.stringify(newValue));
-  },
-
-  SET_TIMEOUT: (state, newSecVal) => {
-    state.sec = newSecVal;
-    localStorage.sec = newSecVal;
+  SET_TEMPLATE: (state, newidVal) => {
+    state.id = newidVal;
+    localStorage.id = newidVal;
   }
 
   // other mutations

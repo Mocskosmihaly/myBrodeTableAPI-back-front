@@ -42,34 +42,43 @@
         >
           <router-link
             class="underlineoff"
-            :to="{ name: 'records', params: { id: template.name } }"
+            :to="{
+              name: 'records',
+              params: { id: template.name }
+            }"
           >
             <div class="flex items-center justify-between flex-wrap">
               <p class="block flex-1 font-mono font-semibold flex items-center">
                 <img
                   src="https://img.icons8.com/wired/30/000000/activity-grid.png"
                 />
-                {{ template.name }}
+                {{ template.name }} (id : {{ template.id }})
               </p>
 
+              <button
+                class="bg-tranparent text-sm hover:bg-green hover:text-white text-green border border-green no-underline font-bold py-2 px-4 mr-2 rounded"
+                @click.prevent="runTemplate(template)"
+              >
+                <fa-icon icon="play" class="clicked" />
+              </button>
               <button
                 class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="editTemplate(template)"
               >
-                Edit
+                <fa-icon icon="pen" class="clicked" />
               </button>
 
               <button
                 class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
                 @click.prevent="removeTemplate(template)"
               >
-                Delete
+                <fa-icon icon="trash" class="clicked" />
               </button>
             </div>
             <v-divider></v-divider>
           </router-link>
 
-          <div v-if="template == editedTemplate">
+          <div v-if="template == editedTemplate" v-show="showTable">
             <form action @submit.prevent="updateTemplate(template)">
               <div
                 class="mb-6 p-4 bg-white rounded border border-grey-light mt-4"
@@ -94,6 +103,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Templates",
   data() {
@@ -103,6 +113,7 @@ export default {
       error: "",
       editedTemplate: "",
       search: "",
+      showTable: false,
       dialog: false,
       show_modal: false,
       show_modal_class: "bg-grey-darker h-screen z-0",
@@ -129,6 +140,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setTemplate"]),
     setError(error, text) {
       this.error =
         (error.response && error.response.data && error.response.data.error) ||
@@ -151,6 +163,10 @@ export default {
         })
         .catch(error => this.setError(error, "Cannot create template"));
     },
+    runTemplate(template) {
+      this.setTemplate(template.id);
+      localStorage.id = template.id;
+    },
     removeTemplate(template) {
       this.$http.secured
         .delete(`/api/v1/templates/${template.id}`)
@@ -161,6 +177,7 @@ export default {
     },
     editTemplate(template) {
       this.editedTemplate = template;
+      this.showTable = !this.showTable;
     },
     updateTemplate(template) {
       this.editedTemplate = "";
@@ -180,5 +197,7 @@ export default {
 }
 .underlineoff {
   text-decoration: none;
+}
+.clicked:active {
 }
 </style>

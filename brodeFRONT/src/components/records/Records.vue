@@ -154,16 +154,17 @@
       <input
         type="submit"
         value="ADD"
-        class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-blue block w-full py-4 text-white items-center justify-center"
+        class=" font-sans font-bold px-4  rounded text-white cursor-pointer no-underline bg-blue hover:bg-blue-dark block w-full py-4 whitetext items-center justify-center "
       />
     </form>
 
     <hr class="border border-grey-light my-6" />
 
-    <ul class="list-reset mt-4">
+    <ul class="list-reset mt-4 ">
       <li
         class="py-4"
         v-for="record in records"
+        v-show="getTemplate(record) === titleId"
         :key="record.id"
         :record="record"
       >
@@ -231,18 +232,18 @@
             class="bg-transparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
             @click.prevent="editRecord(record)"
           >
-            Edit
+            <fa-icon icon="pen" class="clicked" />
           </button>
 
           <button
             class="bg-transparent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
             @click.prevent="removeRecord(record)"
           >
-            Delete
+            <fa-icon icon="trash" class="clicked" />
           </button>
         </div>
 
-        <div v-if="record == editedRecord">
+        <div v-if="record == editedRecord" v-show="showTableE">
           <form action @submit.prevent="updateRecord(record)">
             <div
               class="mb-6 p-4 bg-white rounded border border-grey-light mt-4"
@@ -256,13 +257,36 @@
                 <label class="label">SECUND</label>
                 <input class="input" v-model="record.time" />
               </div>
-              <div class="mb-6">
+              <!-- <div class="mb-6">
                 <label class="label">EFFECT</label>
                 <input class="input" v-model="record.effect" />
-              </div>
-              <div class="mb-6">
+              </div> -->
+              <!-- <div class="mb-6">
                 <label class="label">PATH</label>
                 <input class="input" v-model="record.path" />
+              </div> -->
+              <div class="mb-6">
+                <select id="path_update" class="select" v-model="record.effect">
+                  <option disabled value>Select an template</option>
+                  <option
+                    v-for="record in effectOptions"
+                    :value="record.key"
+                    :key="record.value"
+                    >{{ record.key }}</option
+                  >
+                </select>
+              </div>
+
+              <div class="mb-6">
+                <select id="path_update" class="select" v-model="record.path">
+                  <option disabled value>Select an template</option>
+                  <option
+                    v-for="record in pathOptions"
+                    :value="record.key"
+                    :key="record.value"
+                    >{{ record.key }}</option
+                  >
+                </select>
               </div>
 
               <div class="mb-6">
@@ -293,9 +317,9 @@
     </ul>
     <v-divider></v-divider>
     <v-btn @click="showTemplate" class="m-5 " outlined>
-      <p class="bold">Náhľad</p>
       <fa-icon icon="eye" />
     </v-btn>
+
     <Table v-show="showTable" />
   </div>
 </template>
@@ -317,6 +341,7 @@ export default {
       editedRecord: "",
       selected: "",
       selectedEff: "",
+      showTableE: false,
       showTable: false,
       pathOptions: [
         { key: "Zhora nadol", value: 1 },
@@ -339,8 +364,9 @@ export default {
   },
   computed: {
     titleId() {
-      return this.$route.params.id.toUpperCase();
+      return this.$route.params.id;
     },
+
     createdDate() {
       return moment().format("DD-MM-YYYY ");
     },
@@ -417,6 +443,7 @@ export default {
         .catch(error => this.setError(error, "Cannot delete record"));
     },
     editRecord(record) {
+      this.showTableE = !this.showTableE;
       this.editedRecord = record;
     },
     updateRecord(record) {
@@ -426,8 +453,8 @@ export default {
           record: {
             description: record.description,
             time: record.time,
-            path: this.selected.key,
-            effect: this.selectedEff.key,
+            path: record.path,
+            effect: record.effect,
 
             template_id: record.template
           }
@@ -469,6 +496,10 @@ body {
   min-height: 100vh;
   margin: 0;
 }
+.btnrun {
+  color: #1f9d55;
+  margin-left: 550px;
+}
 .container2 {
   background-color: rgb(0, 0, 0);
   padding-top: 35px;
@@ -478,6 +509,9 @@ body {
   width: 100px;
   height: 100px;
   animation: move 20s linear infinite;
+  color: #fff;
+}
+.text-white {
   color: #fff;
 }
 .content2 {

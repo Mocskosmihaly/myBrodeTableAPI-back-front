@@ -23,7 +23,6 @@ Vue.use(VueAxios, {
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
-  vuetify,
   store,
   router,
   securedAxiosInstance,
