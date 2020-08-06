@@ -55,8 +55,8 @@
               <span
                 class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"
               ></span>
-              <span class="rounded bg-red-400 py-1 px-3 text-xs font-bold">{{
-                data.created_at
+              <span class="rounded bg-red-400 py-1 px-3 text-s font-bold">{{
+                data.created_at.substring(0, 10)
               }}</span>
             </td>
 
@@ -72,14 +72,14 @@
                 class="bg-tranparent text-sm hover:bg-green hover:text-white text-green border border-green no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="runData(data)"
               >
-                <fa-icon icon="play" class="clicked" />
-              </button>
+                <fa-icon icon="play" class="clicked" /></button
+              >|
               <button
                 class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="editData(data)"
               >
-                <fa-icon icon="pen" class="clicked" />
-              </button>
+                <fa-icon icon="pen" class="clicked" /></button
+              >|
               <button
                 class="bg-transparent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
                 @click.prevent="removeData(data)"
@@ -107,7 +107,7 @@
                   <input
                     type="submit"
                     value="Update"
-                    class="my-2  text-sm hover:bg-blue hover:text-white   border-blue  font-bold py-2 px-4 rounded cursor-pointer"
+                    class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-blue hover:bg-blue-dark block w-full py-4 whitetext items-center justify-center"
                   />
                 </div>
               </form>
@@ -116,40 +116,48 @@
         </tbody>
       </table>
     </div>
-    <div class="w-1/3 bg-gray-400 ml-16 h-12">
+    <div class="w-1/2 bg-gray-400 ml-16 h-12 mt-12  ">
+      <p
+        class="block flex  font-mono ml-16 mr-5 pl-16 text-3xl mb-6 mt-5 font-semibold"
+      >
+        DAILY DATA
+      </p>
       <form @submit.prevent="addData">
-        <div class="mb-6 mt-5">
-          <label for="record_description" class="label">TEXT</label>
-          <input
-            type="number"
-            id="record_description"
-            class="input"
-            autofocus
-            autocomplete="off"
-            placeholder="Type a text here..."
-            v-model="newData.temperature"
-          />
-        </div>
+        <div class="flex mb-4 border ">
+          <div class="mb-6 mt-5 pl-5">
+            <label for="record_description" class="label">TEMPRATURE</label>
+            <input
+              type="float"
+              id="record_description"
+              class="input"
+              autofocus
+              autocomplete="off"
+              placeholder="In °C"
+              v-model="newData.temperature"
+            />
+          </div>
 
-        <div class="mb-6">
-          <label for="record_time" class="label">SECUND</label>
-          <input
-            type="number"
-            id="record_time"
-            class="input"
-            autofocus
-            autocomplete="off"
-            placeholder="For how long ..."
-            v-model="newData.windspeed"
-          />
-        </div>
+          <div class="mb-6  ml-3 mt-5">
+            <label for="record_time" class="label">WIND SPEED</label>
+            <input
+              type="float"
+              id="record_time"
+              class="input"
+              autofocus
+              autocomplete="off"
+              placeholder="In km/h"
+              v-model="newData.windspeed"
+            />
+          </div>
 
-        <div id="app"></div>
-        <input
-          type="submit"
-          value="ADD"
-          class=" font-sans font-bold px-4  rounded text-white cursor-pointer no-underline bg-blue hover:bg-blue-dark block w-full py-4 whitetext items-center justify-center "
-        />
+          <div id="app"></div>
+          <input
+            type="submit"
+            class="  ml-12 text-sm hover:bg-green hover:text-white text-green border  border-green no-underline font-bold py-2 px-4 mr-2 rounded"
+          />
+
+          <!-- <fa-icon icon="plus" class="clicked " /> -->
+        </div>
       </form>
     </div>
   </div>

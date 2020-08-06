@@ -52,21 +52,21 @@
                 <img
                   src="https://img.icons8.com/wired/30/000000/activity-grid.png"
                 />
-                {{ template.name }} (id : {{ template.id }})
+                {{ template.name }}
               </p>
 
               <button
                 class="bg-tranparent text-sm hover:bg-green hover:text-white text-green border border-green no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="runTemplate(template)"
               >
-                <fa-icon icon="play" class="clicked" />
-              </button>
+                <fa-icon icon="play" class="clicked" /></button
+              >|
               <button
                 class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
                 @click.prevent="editTemplate(template)"
               >
-                <fa-icon icon="pen" class="clicked" />
-              </button>
+                <fa-icon icon="pen" class="clicked" /></button
+              >|
 
               <button
                 class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"

@@ -10,7 +10,8 @@ import {
   faEye,
   faTimes,
   faRetweet,
-  faPen
+  faPen,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -21,6 +22,7 @@ library.add(
   faPlay,
   faEye,
   faPen,
+  faPlus,
   faTimes,
   faRetweet
 );

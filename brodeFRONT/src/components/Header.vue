@@ -43,19 +43,19 @@
           to="/table"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-          >Home</router-link
+          >Home |</router-link
         >
         <router-link
           to="/templates"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-          >Templates</router-link
+          >Templates |</router-link
         >
         <router-link
           to="/data"
           class="uppercase text-m font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker"
           v-if="signedIn()"
-          >Data</router-link
+          >Data |</router-link
         >
         <a
           href="#"

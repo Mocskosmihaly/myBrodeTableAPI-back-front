@@ -35,58 +35,6 @@
         />
       </div>
 
-      <!-- BUTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONS -->
-
-      <!-- <div class="mx-auto max-w-sm text-center flex flex-wrap justify-center">
-        <div class="flex items-center mr-4 mb-4">
-          <input id="radio1" type="radio" name="radio" class="hidden" checked />
-          <label for="radio1" class="flex items-center cursor-pointer">
-            <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-            <img src="https://img.icons8.com/android/15/000000/down.png" />
-            Zhora nadol
-          </label>
-        </div>
-        <div class="flex items-center mr-4 mb-4">
-          <input id="radio2" type="radio" name="radio" class="hidden" />
-          <label for="radio2" class="flex items-center cursor-pointer">
-            <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-            <img src="https://img.icons8.com/android/15/000000/up.png" />
-            Zdola nahor
-          </label>
-        </div>
-        <div class="flex items-center mr-4 mb-4">
-          <input id="radio3" type="radio" name="radio" class="hidden" />
-          <label for="radio3" class="flex items-center cursor-pointer">
-            <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-            <img src="https://img.icons8.com/android/15/000000/right.png" />
-            Zlava doprava
-          </label>
-        </div>
-        <div class="flex items-center mr-4 mb-4">
-          <input id="radio4" type="radio" name="radio" class="hidden" />
-          <label for="radio4" class="flex items-center cursor-pointer">
-            <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-            <img src="https://img.icons8.com/android/15/000000/left.png" />
-            Zprava dolava
-          </label>
-        </div>
-      </div>
-      <label class="inline-flex items-center mt-3">
-        <input type="checkbox" class="form-checkbox h-5 w-5 text-teal-600" />
-        <span class="ml-2 mr-5 text-gray-700">
-          Blikanie
-          <img src="https://img.icons8.com/android/15/000000/star.png" />
-        </span>
-      </label>
-      <label class="inline-flex items-center mt-3">
-        <input type="checkbox" class="form-checkbox h-5 w-5 text-teal-600" />
-        <span class="ml-2 text-gray-700">
-          Tucne pismo
-          <img src="https://img.icons8.com/android/15/000000/bold.png" />
-        </span>
-      </label>-->
-      <!-- BUTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONS -->
-
       <div class="mb-6">
         <label for="record_effect" class="label">EFFECTS</label>
         <select-set
@@ -316,11 +264,13 @@
       </li>
     </ul>
     <v-divider></v-divider>
-    <v-btn @click="showTemplate" class="m-5 " outlined>
-      <fa-icon icon="eye" />
-    </v-btn>
+    <div class="max-w-lg bg-gray-400 h-12">
+      <v-btn @click="showTemplate" class=" py-4 m-3" outlined>
+        <fa-icon icon="eye" />
+      </v-btn>
 
-    <Table v-show="showTable" />
+      <Table v-show="showTable" />
+    </div>
   </div>
 </template>
 
