@@ -125,27 +125,25 @@
       <form @submit.prevent="addData">
         <div class="flex mb-4 border ">
           <div class="mb-6 mt-5 pl-5">
-            <label for="record_description" class="label">TEMPRATURE</label>
             <input
               type="float"
               id="record_description"
-              class="input"
+              class="w-16 md:w-32 lg:w-48 inputheight"
               autofocus
               autocomplete="off"
-              placeholder="In °C"
+              placeholder="Temperature in °C"
               v-model="newData.temperature"
             />
           </div>
 
           <div class="mb-6  ml-3 mt-5">
-            <label for="record_time" class="label">WIND SPEED</label>
             <input
               type="float"
               id="record_time"
-              class="input"
+              class="w-16 md:w-32 lg:w-48 inputheight"
               autofocus
               autocomplete="off"
-              placeholder="In km/h"
+              placeholder="Windspeed in km/h"
               v-model="newData.windspeed"
             />
           </div>
@@ -197,6 +195,11 @@ export default {
         .delete(`/api/v1/data/${data.id}`)
         .then(response => {
           this.datas.splice(this.datas.indexOf(data), 1);
+          this.$toasted.error("DATA DELETED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          });
         })
         .catch(error => this.setError(error, "Cannot delete record"));
     },
@@ -214,14 +217,26 @@ export default {
         })
         .then(response => {
           this.datas.push(response.data);
-          this.newRecord = "";
-          this.$router.go();
+          this.newData.temperature = "";
+          this.newData.windspeed = "";
+          this.$toasted.success("DATA HAVE BEEN RECORDED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          });
+          // this.$router.go();
+          // this.newRecord = "";
         })
         .catch(error => this.setError(error, "Cannot create record"));
     },
     runData(data) {
       //   this.setTemplate(template.id);
       //   localStorage.dataid = data.id;
+      this.$toasted.success("DATA DISPLAYED SUCCESSFULLY!", {
+        position: "top-center",
+        duration: 3000,
+        theme: "bubble"
+      });
       console.log(data.id);
       this.setdataId(data.id);
       localStorage.dataId = data.id;
@@ -236,10 +251,21 @@ export default {
         .patch(`/api/v1/data/${data.id}`, {
           datum: { temperature: data.temperature, windspeed: data.windspeed }
         })
+        .then(
+          this.$toasted.info("DATA UPDATED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          })
+        )
         .catch(error => this.setError(error, "Cannot update template"));
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+.inputheight {
+  height: 40px;
+}
+</style>

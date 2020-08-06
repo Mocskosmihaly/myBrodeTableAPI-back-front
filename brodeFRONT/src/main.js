@@ -8,13 +8,13 @@ import { securedAxiosInstance, plainAxiosInstance } from "./backend/axios";
 import store from "./store";
 import "./main.css";
 import vuetify from "vuetify";
+import Toasted from "vue-toasted";
 import "vuetify/dist/vuetify.min.css";
 import "./icons.js";
 
 Vue.use(vuetify);
-
 Vue.config.productionTip = false;
-
+Vue.use(Toasted);
 Vue.use(VueAxios, {
   secured: securedAxiosInstance,
   plain: plainAxiosInstance

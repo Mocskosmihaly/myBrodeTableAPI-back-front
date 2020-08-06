@@ -220,8 +220,9 @@
                     v-for="record in effectOptions"
                     :value="record.key"
                     :key="record.value"
-                    >{{ record.key }}</option
                   >
+                    <div class="selectedone">{{ record.key }}</div>
+                  </option>
                 </select>
               </div>
 
@@ -379,8 +380,17 @@ export default {
         })
         .then(response => {
           this.records.push(response.data);
-          this.newRecord = "";
-          this.$router.go();
+          this.newRecord.description = "";
+          this.newRecord.time = "";
+          this.selected = "";
+          this.selectedEff = "";
+          this.newRecord.template = "";
+          this.$toasted.success("RECORD ADDED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          });
+          // this.$router.go();
         })
         .catch(error => this.setError(error, "Cannot create record"));
     },
@@ -389,6 +399,11 @@ export default {
         .delete(`/api/v1/records/${record.id}`)
         .then(response => {
           this.records.splice(this.records.indexOf(record), 1);
+          this.$toasted.error("RECORD DELETED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          });
         })
         .catch(error => this.setError(error, "Cannot delete record"));
     },
@@ -409,6 +424,13 @@ export default {
             template_id: record.template
           }
         })
+        .then(
+          this.$toasted.info("RECORD UPDATED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          })
+        )
         .catch(error => this.setError(error, "Cannot update record"));
     }
   }

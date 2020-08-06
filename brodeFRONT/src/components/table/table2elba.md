@@ -39,56 +39,50 @@
         </tbody>
       </table>
 
-      <h2
+      <h1
         v-for="(record, index) of filteredRecords"
         :key="index"
         :record="record"
-        :class="getClass(record)"
       >
-        <p
-          :class="getPClass(record)"
-          v-show="
-            record.path === 'Zdola nahor' &&
-              currentlyActive &&
-              record.id == currentlyActive.id
-          "
-        >
-          {{ record.description }}
-        </p>
-        <p
-          :class="getPClass(record)"
-          v-show="
-            record.path === 'Zlava doprava' &&
-              currentlyActive &&
-              record.id == currentlyActive.id
-          "
-        >
-          {{ record.description }}
-        </p>
-        <p
-          :class="getPClass(record)"
-          v-show="
-            record.path === 'Zprava dolava' &&
-              currentlyActive &&
-              record.id == currentlyActive.id
-          "
-        >
-          {{ record.description }}
-        </p>
-        <p
-          :class="getPClass(record)"
-          v-show="
-            record.path === 'Zhora nadol' &&
-              currentlyActive &&
-              record.id == currentlyActive.id
-          "
-        >
-          {{ record.description }}
-        </p>
-      </h2>
+        <div :class="getClass(record)">
+          <strong
+            v-show="
+              record.path === 'Zdola nahor' &&
+                currentlyActive &&
+                record.id == currentlyActive.id
+            "
+            >{{ record.description }}
+          </strong>
+          <strong
+            v-show="
+              record.path === 'Zlava doprava' &&
+                currentlyActive &&
+                record.id == currentlyActive.id
+            "
+            >{{ record.description }}
+          </strong>
+          <strong
+            v-show="
+              record.path === 'Zprava dolava' &&
+                currentlyActive &&
+                record.id == currentlyActive.id
+            "
+            >{{ record.description }}
+          </strong>
+          <strong
+            v-show="
+              record.path === 'Zhora nadol' &&
+                currentlyActive &&
+                record.id == currentlyActive.id
+            "
+            >{{ record.description }}
+          </strong>
+        </div>
+      </h1>
 
       <!-- templatenel megadom egy valtozoba a template.id es ki filtralom a record.template_id === template.id  -->
     </div>
+
   </body>
 </template>
 
@@ -106,27 +100,14 @@ export default {
       currentlyActive: null,
       // currentlyActive: null
       anyad: []
-      // filteredDatas: null
       // filteredDatas: []
     };
   },
-  watch: {
-    filteredRecords: {
-      handler(newVal, oldVal) {
-        if (newVal.length > 0 && newVal.length !== oldVal.length) {
-          this.start();
-        }
-      },
-      deep: true
-    },
-    filteredDatas: {
-      handler(newVal, oldVal) {
-        if (newVal.length > 0 && newVal.length !== oldVal.length) {
-          // this.start();
-        }
-      },
-      deep: true
-    }
+  mounted() {
+    // this.records = this.filteredRecords;
+    this.start();
+    // console.log(this.filteredRecords);
+    // console.log(this.anyad);
   },
 
   computed: {
@@ -204,16 +185,6 @@ export default {
     //     this.nextRecord();
     //   }, this.currentlyActive.time * 1000);
     // },
-
-    getPClass(record) {
-      return {
-        blikanie: record.effect === "Blikanie textu",
-        tucne: record.effect === "Tucne pismo",
-        blikanietucne: record.effect === "Blikanie textu aj Tucne pismo",
-        noeff: record.effect === "Nechcem effect"
-      };
-    },
-
     getClass(record) {
       return {
         zdolanahor: record.path === "Zdola nahor",
@@ -231,7 +202,6 @@ export default {
         this.nextRecord();
       }, this.currentlyActive.time * 1000);
     },
-
     nextRecord() {
       let currIndex = this.filteredRecords.findIndex(
         f => f === this.currentlyActive
@@ -289,6 +259,7 @@ export default {
   // }
 };
 </script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&family=Roboto:ital,wght@1,300&display=swap");
 
@@ -296,6 +267,14 @@ export default {
   box-sizing: border-box;
 }
 
+h1 {
+  position: absolute;
+  clip: rect(0, 0, 300px, 0);
+}
+
+h1.is-active {
+  clip: rect(0, 1100px, 300px, -300px);
+}
 #degree {
   justify-content: center;
   display: flex;
@@ -324,62 +303,38 @@ body {
   padding-top: 35px;
   height: 100px;
 }
-.noeff {
-  font-weight: 1;
-}
-.blikanietucne {
-  animation: blinker 5s linear infinite;
-}
-.blikanie {
-  font-weight: 1;
-  animation: blinker 5s linear infinite;
-}
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
 .zlavadoprava {
   margin-top: 100px;
   color: yellow;
-  z-index: 2;
-  /* width: 1000px; */
-  /* height: 1000px; */
+  width: 1000px;
+  height: 1000px;
   animation: move 20s linear infinite;
 }
 .zhoranadol {
   margin-top: 100px;
-  z-index: 2;
   margin-left: 400px;
 
   color: yellow;
 
-  /* width: 1000px; */
-  /* height: 1000px; */
+  width: 1000px;
+  height: 1000px;
   animation: move2 5s infinite alternate;
 }
 .zdolanahor {
-  z-index: 2;
-
   margin-top: 100px;
-  margin-left: 400px;
-
   color: yellow;
 
-  /* width: 1000px; */
-  /* height: 1000px; */
-  animation: move2 5s infinite alternate;
+  width: 1000px;
+  height: 1000px;
+  animation: move2 20s linear infinite;
 }
 
 .zpravadolava {
-  z-index: 2;
-
   margin-top: 100px;
   color: yellow;
 
-  /* width: 1000px; */
-  /* height: 1000px; */
+  width: 1000px;
+  height: 1000px;
   animation: move4 20s linear infinite;
 }
 
@@ -394,23 +349,29 @@ span {
 
 @keyframes move {
   0% {
-    transform: translate(0px);
+    transform: translate(50px);
+    opacity: 1;
   }
   90% {
-    transform: translate(650px);
+    transform: translate(800px);
+    opacity: 1;
   }
 
   92% {
-    transform: translate(650px);
+    transform: translate(800px);
+    opacity: 0;
   }
   94% {
-    transform: translate(650px);
+    transform: translate(800px);
+    opacity: 1;
   }
   96% {
-    transform: translate(650px);
+    transform: translate(800px);
+    opacity: 0;
   }
   98% {
-    transform: translate(650px);
+    transform: translate(800px);
+    opacity: 1;
   }
   /* 60% {
     transform: translate(500px);
@@ -418,28 +379,35 @@ span {
   } */
 
   100% {
-    transform: translate(0px);
+    opacity: 1;
+    transform: translate(50px);
   }
 }
 @keyframes move4 {
   0% {
     transform: translate(500px);
+    opacity: 1;
   }
   90% {
     transform: translate(50px);
+    opacity: 1;
   }
 
   92% {
     transform: translate(50px);
+    opacity: 0;
   }
   94% {
     transform: translate(50px);
+    opacity: 1;
   }
   96% {
     transform: translate(50px);
+    opacity: 0;
   }
   98% {
     transform: translate(50px);
+    opacity: 1;
   }
 
   100% {
@@ -487,6 +455,9 @@ table td {
   color: yellow;
   padding-left: 30px;
   /* margin-bottom: 21px; */
+}
+table tbody tr {
+  /* background-color: #5a5b5c; */
 }
 
 .default {

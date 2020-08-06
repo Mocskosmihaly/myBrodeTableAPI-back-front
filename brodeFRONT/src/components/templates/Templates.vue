@@ -158,12 +158,17 @@ export default {
 
         .then(response => {
           this.templates.push(response.data);
-          this.newTemplate = "";
-          this.$router.go();
+          this.newTemplate.name = "";
+          // this.$router.go();
         })
         .catch(error => this.setError(error, "Cannot create template"));
     },
     runTemplate(template) {
+      this.$toasted.success("TEMPLATE DISPLAYED SUCCESSFULLY!", {
+        position: "top-center",
+        duration: 3000,
+        theme: "bubble"
+      });
       this.setTemplate(template.id);
       localStorage.id = template.id;
     },
@@ -172,6 +177,11 @@ export default {
         .delete(`/api/v1/templates/${template.id}`)
         .then(response => {
           this.templates.splice(this.templates.indexOf(template), 1);
+          this.$toasted.error("TEMPLATE DELETED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          });
         })
         .catch(error => this.setError(error, "Cannot delete template"));
     },
@@ -185,6 +195,13 @@ export default {
         .patch(`/api/v1/templates/${template.id}`, {
           template: { name: template.name }
         })
+        .then(
+          this.$toasted.info("TEMPLATE UPDATED SUCCESSFULLY!", {
+            position: "top-center",
+            duration: 3000,
+            theme: "bubble"
+          })
+        )
         .catch(error => this.setError(error, "Cannot update template"));
     }
   }
@@ -197,7 +214,5 @@ export default {
 }
 .underlineoff {
   text-decoration: none;
-}
-.clicked:active {
 }
 </style>

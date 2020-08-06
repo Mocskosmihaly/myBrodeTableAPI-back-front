@@ -104,9 +104,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.imged {
-  /* padding-top: 50px; */
-  /* margin-top: 50px; */
-}
-</style>
+<style scoped></style>
